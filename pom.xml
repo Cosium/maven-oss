@@ -84,6 +84,39 @@
             <tagNameFormat>@{project.version}</tagNameFormat>
           </configuration>
         </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-enforcer-plugin</artifactId>
+          <version>3.0.0</version>
+          <executions>
+            <execution>
+              <id>enforce</id>
+              <goals>
+                <goal>enforce</goal>
+              </goals>
+              <configuration>
+                <rules>
+                  <requireUpperBoundDeps/>
+                  <bannedDependencies>
+                    <excludes>
+                      <!--
+                       CVE-2021-44228 and CVE-2021-45046
+                       Prevents "Remote code injection in Log4j".
+                       https://github.com/advisories/GHSA-jfh8-c2jp-5v3q
+                       -->
+                      <exclude>org.apache.logging.log4j:log4j-core:(,2.16.0)</exclude>
+                      <!-- Exclude javax dependencies to enforce jakarta namespace usage -->
+                      <exclude>javax.*:*</exclude>
+                      <exclude>org.apache.tomee:javaee-api</exclude>
+                      <!-- Use org.eclipse.angus:angus-mail instead -->
+                      <exclude>com.sun.mail:jakarta.mail</exclude>
+                    </excludes>
+                  </bannedDependencies>
+                </rules>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
       </plugins>	      
     </pluginManagement>	    
     <plugins>
