@@ -5,6 +5,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.COSIUM_JENKINS_GITHUB_PUBLIC_REPO_PAT }}
       - name: Setup environment
         uses: actions/setup-java@v3
         with:
