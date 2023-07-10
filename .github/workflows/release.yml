@@ -6,6 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
+          fetch-depth: 0
           token: ${{ secrets.COSIUM_JENKINS_GITHUB_PUBLIC_REPO_PAT }}
       - name: Setup environment
         uses: actions/setup-java@v3
