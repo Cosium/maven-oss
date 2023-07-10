@@ -13,10 +13,14 @@ jobs:
           server-id: ossrh
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
+      - name: Install GPG private key
+        run: |
+          cat <(echo -e "${{ secrets.COSIUM_JENKINS_GPG_PRIVATE_KEY }}") | gpg --batch --import
+          gpg --list-secret-keys --keyid-format LONG
       - name: Release
         run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
+          git config user.name cosium-jenkins
+          git config user.email jenkinsbot@cosium.com
           ./release.sh
         env:
           MAVEN_USERNAME: ${{ secrets.COM_COSIUM_MAVEN_USERNAME }}
