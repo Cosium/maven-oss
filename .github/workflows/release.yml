@@ -14,7 +14,10 @@ jobs:
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
       - name: Release
-        run: ./release.sh
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          ./release.sh
         env:
           MAVEN_USERNAME: ${{ secrets.COM_COSIUM_MAVEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.COM_COSIUM_MAVEN_TOKEN }}
